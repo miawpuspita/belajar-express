@@ -1,9 +1,12 @@
 const express = require("express") // impor modul express
 const app = express() // inisialisasi express
+const expresslayout = require("express-ejs-layouts"); // impor modul express-ejs-layouts
 const port = 3000 // port
 
+app.set("views",__dirname +"/views");
 app.set('view engine', 'ejs');
 
+app.use(expresslayout);
 // route/
 app.get("/", (req,res) => {
    // res.sendFile(__dirname + "/index.html");
