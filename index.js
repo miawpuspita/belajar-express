@@ -7,6 +7,7 @@ app.set("views", __dirname +"/views");
 app.set("view engine", "ejs");
 
 app.use(expressLayout);
+app.use(express.static('public'));
 
 // route/
 app.get("/home", (req,res) => {
