@@ -7,7 +7,7 @@ app.set("views", __dirname +"/views");
 app.set("view engine", "ejs");
 
 app.use(expressLayout);
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 // route/
 app.get("/home", (req,res) => {
@@ -58,7 +58,7 @@ app.get("/mahasiswa", (req, res) => {
         "status": "success",
         "message": "Data mahasiswa",
         "data": [
-            { npm: 222624001, nama: "Angel" },
+            { npm: 222624001, nama: "puspita" },
             { npm: 222624002, nama: "Budi" },
             { npm: 222624003, nama: "Cindy" }
         ]
