@@ -4,10 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const expressLayout = require("express-ejs-layouts");
+// const prodiRoutes = require('./routes/prodi'); // Adjust the path as needed
+const connectDB = require("./app_api/models/db");
 
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
-
+var prodiRouter = require('./app_server/routes/prodi');
+const fakultasRouter = require("./app_api/routes/fakultas");
 var app = express();
 
 // view engine setup
@@ -23,6 +26,11 @@ app.use(expressLayout);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/prodi', prodiRouter);
+app.use('/api/fakultas, fakultasRouter');
+
+//connect ke MongoDB
+connectDB();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
