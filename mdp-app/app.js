@@ -27,7 +27,7 @@ app.use(expressLayout);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/prodi', prodiRouter);
-app.use('/api/fakultas, fakultasRouter');
+app.use('/api/fakultas', fakultasRouter);
 
 //connect ke MongoDB
 connectDB();
