@@ -6,7 +6,7 @@ const prodiController = require("../controllers/prodiController");
 
 router.get("/", prodiController.getAllprodi);
 
-router.post("/", prodiontroller.createProdi);
+router.post("/", prodiController.createProdi);
 
 router.get("/:id", prodiController.getProdiyId);
 
