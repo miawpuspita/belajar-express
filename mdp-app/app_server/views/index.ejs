@@ -1,10 +1,11 @@
- <p>ni halaman Home</p>
-
-<img src="./img/imagesss.jpg" class="rounded float-start" alt="...">
-<img src="./img/imagessss.jpg" class="rounded float-end" alt="...">
-
-    <h4>Berita Terkini</h4>
-    <% berita.forEach(data => { %>
-        <h5><%= data.judul %></h5>
-        <p><%= data.isi %></p>
-    <% }) %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+  </body>
+</html>

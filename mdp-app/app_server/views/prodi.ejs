@@ -4,37 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
+
     <style>
-        table {
+        table{
             width: 100%;
             border-collapse: collapse;
         }
-        th, td {
-            border: 1px solid #000000;
+        th,td {
+            border: 1px solid salmon;
             padding: 8px;
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: aqua;
         }
     </style>
 </head>
 <body>
-    <h1><%= title %></h1>
+    <h1>Prodi</h1>
+    <!-- <ul>
+        <li><a href="/home">home</a></li>
+        <li><a href="/about">about us</a></li>
+        <li><a href="/contact">contact us</a></li>
+        <li><a href="/prodi">Prodi</a></li>
+    </ul> -->
+    <h2>Halaman Prodi</h2>
     <table>
-        <thead>
+        <thead></thead>
             <tr>
-                <th>Nama</th>
+                <th>Nama Prodi</th>
                 <th>Fakultas</th>
                 <th>Singkatan</th>
             </tr>
         </thead>
         <tbody>
-            <% prodis.forEach(prodi => { %>
+            <% programstudi.forEach(prodi => { %>
                 <tr>
-                    <td><%= prodi.nama %></td>
-                    <td><%= prodi.fakultas %></td>
-                    <td><%= prodi.singkatan %></td>
+                    <td><%= prodi.NamaProdi %></td>
+                    <td><%= prodi.Fakultas %></td>
+                    <td><%= prodi.Singkatan %></td>
                 </tr>
             <% }); %>
         </tbody>

@@ -1,10 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-// import controller
-const prodiController = require('../Controllers/prodiController')
+const prodiController = require('../controllers/prodiController');
 
-//route
-router.get('/', prodiController.index)
+router.get('/', prodiController.prodi);
 
 module.exports = router;
