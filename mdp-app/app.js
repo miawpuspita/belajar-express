@@ -9,9 +9,10 @@ const connectDB = require("./app_api/models/db");
 
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
+var fakultasRouter = require('./app_server/routes/fakultas');
 var prodiRouter = require('./app_server/routes/prodi');
-const fakultasRouter = require("./app_api/routes/fakultas");
-const prodiRouterapi = require("./app_api/routes/prodi");
+const fakultasRouterApi = require("./app_api/routes/fakultas");
+const prodiRouterApi = require("./app_api/routes/prodi");
 
 var app = express();
 
@@ -29,9 +30,10 @@ app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/fakultas', fakultasRouter);
 app.use('/prodi', prodiRouter);
 app.use("/api/fakultas", fakultasRouter);
-app.use("/api/prodi", prodiRouterapi);
+app.use("/api/prodi", prodiRouter);
 
 // connect to mongoDB
 connectDB();
