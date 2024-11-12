@@ -1,89 +1,57 @@
-const express = require("express") // impor modul express
-const app = express() // inisialisasi express
-const expressLayout = require("express-ejs-layouts"); // input modul express-ejs-layouts
-const port = 3000;// port
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+const expressLayout = require("express-ejs-layouts");
+const cors = require("cors");
+const connectDB = require("./mdp-app/app_api/models/db");
 
-app.set("views", __dirname +"/views");
-app.set("view engine", "ejs");
+var indexRouter = require('./mdp-app/app_server/routes/index');
+var usersRouter = require('./mdp-app/app_server/routes/users');
+var prodiRouter = require('./mdp-app/app_server/routes/prodi');
+const fakultasRouter = require("./mdp-app/app_api/routes/fakultas");
+const prodiRouterapi = require("./mdp-app/app_api/routes/prodi");
 
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, "app_server", 'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayout);
-app.use(express.static("public"));
+app.use(cors());
 
-// route/
-app.get("/home", (req,res) => {
-   // res.sendFile(__dirname + "/index.html");
+app.set("layout", "main");
 
-   const berita =[
-    {
-        judul : "Berita 1",
-        isi : "Isi Berita 1"
-    },
-    {
-        judul : "Berita 2",
-        isi : "Isi Berita 2"
-    },
-   ];
-   res.render('index', {title: 'Halaman Home', berita,  layout:'main'});
-})
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/prodi', prodiRouter);
+app.use("/api/fakultas", fakultasRouter);
+app.use("/api/prodi", prodiRouterapi);
 
-//route/about
-app.get("/about", (req, res)=>{
-    //res.sendFile(__dirname + "/about.html");
-    res.render('about',  {title: 'Halaman About', layout:'main'});
+// connect to mongoDB
+connectDB();
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
 });
 
-//route/contact
-app.get("/contact", (req, res)=>{
-    //res.sendFile(__dirname + "/contact.html");
-    res.render('contact', {title: 'Halaman Contact', layout:'main'});
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
-app.get("/prodi", (req, res) => {
-    const prodis = [
-        { nama: "Sistem Informasi", fakultas: "FIKR", singkatan: "SI" },
-        { nama: "Informatika", fakultas: "FIKR", singkatan: "IF" },
-        { nama: "Teknik Elektro", fakultas: "FT", singkatan: "TE" },
-        { nama: "Manajemen Informatika", fakultas: "FIKR", singkatan: "MI" },
-        { nama: "Manajemen", fakultas: "FEB", singkatan: "MJ" },
-        { nama: "Akuntansi", fakultas: "FEB", singkatan: "AK" }
-    ];
-    
-    res.render('prodi', { title: 'Halaman Prodi', prodis, layout:'main'});
-});
-
-
-// route /mahasiswa
-app.get("/mahasiswa", (req, res) => {
-    res.json({
-        "status": "success",
-        "message": "Data mahasiswa",
-        "data": [
-            { npm: 222624001, nama: "puspita" },
-            { npm: 222624002, nama: "Budi" },
-            { npm: 222624003, nama: "Cindy" }
-        ]
-    });
-});
-
-// route /dosen
-app.get("/dosen", (req, res) => {
-    res.json({
-        "status": "success",
-        "message": "Data dosen",
-        "data": [
-            { prodi: "Sistem Informasi", dosen: ["Iis", "Faris","Dafid"] },
-            { prodi: "Informatika", dosen: ["Derry", "Siska", "Yohannes"] }
-        ]
-    });
-});
-
-
-// handle route yg tdk terdaftar
-app.use("/", (req,res)=> {
-    res.send("<h1>404 Not Found</h1>");
-});
-
-// jalankan server
-app.listen(port, ()=>{
-    console.log(`Server dapat diakses di http://localhost:${port}`);
-});
+module.exports = app;

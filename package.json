@@ -1,18 +1,57 @@
 {
+  
   "dependencies": {
-    "ejs": "^3.1.10",
-    "express": "^4.21.0",
-    "express-ejs-layouts": "^2.5.1",
-    "mongoose": "^8.7.2"
+  
+    
+  "cookie-parser": "^1.4.7",
+  
+    
+  "cors": "^2.8.5",
+  
+    
+  "ejs": "^3.1.10",
+  
+    
+  "express": "^4.21.0",
+  
+    
+  "express-ejs-layouts": "^2.5.1",
+  
+    
+  "mongoose": "^8.8.0",
+  
+    
+  "morgan": "^1.10.0",
+  
+    
+  "path": "^0.12.7"
+  
   },
+  
   "name": "belajar-express",
+  
   "description": "",
+  
   "version": "1.0.0",
+  
   "main": "index.js",
+  
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  
+    
+  "start": "node ./bin/www",
+  
+    
+  "dev": "nodemon ./bin/www",
+  
+    
+  "test": "echo \"Error: no test specified\" && exit 1"
+  
   },
+  
   "keywords": [],
+  
   "author": "",
+  
   "license": "ISC"
 }
