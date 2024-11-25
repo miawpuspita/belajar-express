@@ -7,7 +7,7 @@ const connectDB = async () => {
     try {
         //menghubungkan ke mongodb menggunakan url koneksi
         await mongoose.connect(
-            // "mongodb+srv://ericcandra:eric123@cluster0.hadmb.mongodb.net/mdpdb?retryWrites=true&w=majority&appName=Cluster0"
+            // "mongodb+srv://puspitasari:puspita123@cluster0.hadmb.mongodb.net/mdpdb?retryWrites=true&w=majority&appName=Cluster0"
             "mongodb://localhost:27017/mdpdb"
         );
         // jika koneksi berhasil log pesan ke konsol
