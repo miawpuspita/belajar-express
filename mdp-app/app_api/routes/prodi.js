@@ -4,11 +4,11 @@ const router = express.Router();
 
 const prodiController = require("../controllers/prodiController");
 
-router.get("/", prodiController.getAllprodi);
+router.get("/", prodiController.getAllProdi);
 
 router.post("/", prodiController.createProdi);
 
-router.get("/:id", prodiController.getProdiyId);
+router.get("/:id", prodiController.getProdiById);
 
 router.put("/:id", prodiController.updateProdi);
 

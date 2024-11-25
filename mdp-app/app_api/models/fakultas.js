@@ -1,4 +1,3 @@
-
 // model fakultas
 // mengimpor modul mongoose untuk mengelola koneksi dengan mongodb
 const mongoose = require("mongoose");
