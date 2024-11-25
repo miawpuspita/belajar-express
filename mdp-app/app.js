@@ -7,6 +7,7 @@ const expressLayout = require("express-ejs-layouts");
 const cors = require("cors");
 const connectDB = require("./app_api/models/db");
 
+<<<<<<< HEAD
 const indexRouter = require('./app_server/routes/index');
 const fakultasRouter = require("./app_server/routes/fakultas");
 const usersRouter = require('./app_server/routes/users');
@@ -17,6 +18,15 @@ const prodiRouterapi = require("./app_api/routes/prodi");
 const authRouterApi = require("./app_api/routes/auth");
 const mahasiswaRouterApi = require("./app_api/routes/mahasiswa");
 
+=======
+var indexRouter = require('./app_server/routes/index');
+var usersRouter = require('./app_server/routes/users');
+var fakultasRouter = require('./app_server/routes/fakultas');
+var prodiRouter = require('./app_server/routes/prodi');
+const fakultasRouterApi = require("./app_api/routes/fakultas");
+const prodiRouterApi = require("./app_api/routes/prodi");
+const authRouterApi = require("./app_api/routes/auth");
+>>>>>>> 1fea0b80f57fef2dd11a78caab21746880869caa
 require("dotenv").config();
 
 var app = express();
@@ -35,12 +45,20 @@ app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+<<<<<<< HEAD
 app.use("/fakultas", fakultasRouter);
 app.use('/prodi', prodiRouter);
 app.use("/api/fakultas", fakultasRouterApi);
 app.use("/api/prodi", prodiRouterapi);
 app.use("/api/auth", authRouterApi);
 app.use("/api/mahasiswa", mahasiswaRouterApi);
+=======
+app.use('/fakultas', fakultasRouter);
+app.use('/prodi', prodiRouter);
+app.use("/api/fakultas", fakultasRouter);
+app.use("/api/prodi", prodiRouter);
+app.use("/api/auth", authRouter);
+>>>>>>> 1fea0b80f57fef2dd11a78caab21746880869caa
 
 // connect to mongoDB
 connectDB();

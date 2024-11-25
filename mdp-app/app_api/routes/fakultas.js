@@ -4,6 +4,7 @@ const router = express.Router();
 
 const fakultasController = require("../controllers/fakultasController");
 
+<<<<<<< HEAD
 // Mengimpor middleware untuk autentikasi dan pengecekan peran
 const authMiddleware = require("../middleware/authmiddleware");
 const roleMiddleware = require("../middleware/roleMiddleware");
@@ -21,6 +22,15 @@ router.get("/:id", authMiddleware, fakultasController.getFakultasById);
 router.put("/:id", authMiddleware, roleMiddleware("admin"), fakultasController.updateFakultas);
 // Mengatur rute DELETE untuk menghapus data fakultas berdasarkan ID
 router.delete("/:id", authMiddleware, roleMiddleware("admin"), fakultasController.deleteFakultas);
+=======
+//import middleware auth dan role
+const authMiddleware = require("../middleware/authMiddleware");
+const roleMiddleware = require("../middleware/roleMiddleware");
+
+router.get("/", authMiddleware, fakultasController.getAllFakultas);
+
+router.post("/", authMiddleware, roleMiddleware,('admin'), fakultasController.createFakultas);
+>>>>>>> 1fea0b80f57fef2dd11a78caab21746880869caa
 
 
 // router.get("/", fakultasController.getAllFakultas);
