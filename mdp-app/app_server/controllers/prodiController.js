@@ -1,13 +1,15 @@
-const prodi = (req, res) => {
-    const programstudi =[
-        {NamaProdi: "Sistem Informasi", Fakultas: "FIKR", Singkatan: "SI"},
-        {NamaProdi: "Informatika", Fakultas: "FIKR", Singkatan: "IF"},
-        {NamaProdi: "Teknik Elektro", Fakultas: "FIKR", Singkatan: "TE"},
-        {NamaProdi: "Manajemen Informatika", Fakultas: "FIKR",Singkatan: "MI"},
-        {NamaProdi: "Manajemen", Fakultas: "FEB", Singkatan: "MJ"},
-        {NamaProdi: "Akuntasi", Fakultas: "FEB", Singkatan: "AK"}
+// controllers/prodiController.js
+const index = (req, res) => {
+    const prodis = [
+        { nama: "Sistem Informasi", fakultas: "FIKR", singkatan: "SI" },
+        { nama: "Informatika", fakultas: "FIKR", singkatan: "IF" },
+        { nama: "Teknik Elektro", fakultas: "FT", singkatan: "TE" },
+        { nama: "Manajemen Informatika", fakultas: "FIKR", singkatan: "MI" },
+        { nama: "Manajemen", fakultas: "FEB", singkatan: "MJ" },
+        { nama: "Akuntansi", fakultas: "FEB", singkatan: "AK" }
     ];
-    res.render('prodi',{title: 'halaman prodi',programstudi,layout:'main'});
+
+    res.render('prodi', { title: 'Halaman Prodi', prodis, layout: 'main' });
 };
 
-module.exports = {prodi}
+module.exports = {index}

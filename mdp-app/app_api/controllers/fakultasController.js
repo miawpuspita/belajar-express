@@ -1,6 +1,5 @@
 const Fakultas = require("../models/fakultas");
 
-
 const getAllFakultas = async (req, res) =>{
     try {
         // mengambil semua fakultas dari database

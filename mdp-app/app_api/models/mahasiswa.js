@@ -26,10 +26,10 @@ const mahasiswaSchema = new mongoose.Schema(
       type: String, // Tipe data String
       required: true, // Wajib diisi
     },
-    // foto: {
-    //   type: String, // Tipe data String, menyimpan URL atau path file foto
-    //   required: false, // Tidak wajib diisi
-    // },
+    foto: {
+      type: String, // Tipe data String, menyimpan URL atau path file foto
+      required: false, // Tidak wajib diisi
+    },
   },
   { timestamps: true } // Menambahkan kolom createdAt dan updatedAt secara otomatis
 );

@@ -1,14 +1,16 @@
+// model prodi
+// mengimpor modul mongoose untuk mengelola koneksi dengan mongodb
 const mongoose = require("mongoose");
 
-// definisakn schema untuk fakultas
+// definisakn schema untuk prodi
 const prodiSchema = new mongoose.Schema({
-    // field untuk nama fakultas
+    // field untuk nama prodi
     nama: {
         type: String,
         required: true,
         trim: true,
     },
-    // field untuk singkatan fakultas
+    // field untuk singkatan prodi
     singkatan: {
         type: String,
         required: true,
@@ -17,14 +19,14 @@ const prodiSchema = new mongoose.Schema({
     fakultas_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Fakultas",
-        required: true,
+        required: true,  
     },
-    // field untuk menyimpan tanggal pembuatan data fakultas
+    
+    // field untuk menyimpan tanggal pembuatan data prodi
     createdAt: {
         type: Date,
         default: Date.now,
     },
-
 });
 
 // buat modul prodi dari skema yang telah didefinisikan
