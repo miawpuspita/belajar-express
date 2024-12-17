@@ -19,6 +19,7 @@ export class ProdiComponent implements OnInit { // Mendeklarasikan class kompone
   isLoading = true; // Indikator loading data dari API.
   prodiForm: FormGroup; // Form group untuk formulir reaktif prodi.
   isSubmitting = false; // Indikator proses pengiriman data.
+  editProdiId: string | null = null; // ID prodi yang sedang diubah
 
   private http = inject(HttpClient); // Menggunakan Angular inject API untuk menyuntikkan HttpClient.
   private fb = inject(FormBuilder); // Menyuntikkan FormBuilder untuk membangun form reaktif.
@@ -100,21 +101,21 @@ export class ProdiComponent implements OnInit { // Mendeklarasikan class kompone
       });
     }
   }
+
   // Method untuk menghapus prodi
-deleteProdi(_id: string): void {
-  if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { // Konfirmasi penghapusan
-    this.http.delete(`${this.apiProdiUrl}/${_id}`).subscribe({
-      next: () => {
-        console.log(`Prodi dengan ID ${_id} berhasil dihapus`);
-        this.getProdi(); // Refresh data prodi setelah penghapusan
-      },
-      error: (err) => {
-        console.error('Error menghapus prodi:', err); // Log error jika penghapusan gagal
-      }
-    });
+  deleteProdi(_id: string): void {
+    if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { // Konfirmasi penghapusan
+      this.http.delete(`${this.apiProdiUrl}/${_id}`).subscribe({
+        next: () => {
+          console.log(`Prodi dengan ID ${_id} berhasil dihapus`);
+          this.getProdi(); // Refresh data prodi setelah penghapusan
+        },
+        error: (err) => {
+          console.error('Error menghapus prodi:', err); // Log error jika penghapusan gagal
+        }
+      });
+    }
   }
-}
-editProdiId: string | null = null; // ID prodi yang sedang diubah
 
   // Method untuk mendapatkan data prodi berdasarkan ID
   getProdiById(_id: string): void {

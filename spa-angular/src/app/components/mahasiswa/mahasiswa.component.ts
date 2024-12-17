@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import * as bootstrap from 'bootstrap';
 
 @Component({
@@ -12,14 +12,17 @@ import * as bootstrap from 'bootstrap';
   styleUrls: ['./mahasiswa.component.css']
 })
 export class MahasiswaComponent implements OnInit {
-  mahasiswa: any[] = []; // Menyimpan data mahasiswa
-  prodi: any[] = []; // Menyimpan data program studi untuk dropdown
-  jenisKelaminOptions: string[] = ['Laki-laki', 'Perempuan']; // Opsi jenis kelamin
-  apiMahasiswaUrl = 'https://crud-express-seven.vercel.app/api/mahasiswa'; // URL API untuk mengambil dan menambahkan data mahasiswa
-  apiProdiUrl = 'https://crud-express-seven.vercel.app/api/prodi'; // URL API untuk mengambil data prodi
-  isLoading = true; // Indikator loading data dari API
-  mahasiswaForm: FormGroup; // Form group untuk formulir reaktif mahasiswa
-  isSubmitting = false; // Indikator proses pengiriman data
+  mahasiswa: any[] = [];
+  prodi: any[] = [];
+  jenisKelamin: string[] = ['L', 'P'];
+  apiMahasiswaUrl = 'https://crud-express-seven.vercel.app/api/mahasiswa';
+  apiProdiUrl = 'https://crud-express-seven.vercel.app/api/prodi';
+  isLoading = true;
+  mahasiswaForm: FormGroup;
+  isSubmitting = false;
+  editMahasiswaId: string | null = null;
+
+  @Output() mahasiswaAdded = new EventEmitter<void>(); // EventEmitter untuk memberi tahu komponen induk
 
   private http = inject(HttpClient);
   private fb = inject(FormBuilder);
@@ -28,9 +31,9 @@ export class MahasiswaComponent implements OnInit {
     this.mahasiswaForm = this.fb.group({
       npm: [''],
       nama: [''],
-      prodi_id: [null],
       jenis_kelamin: [''],
-      asal_sekolah: ['']
+      asal_sekolah: [''],
+      prodi_id: [null]
     });
   }
 
@@ -39,7 +42,6 @@ export class MahasiswaComponent implements OnInit {
     this.getProdi();
   }
 
-  // Mengambil data mahasiswa
   getMahasiswa(): void {
     this.http.get<any[]>(this.apiMahasiswaUrl).subscribe({
       next: (data) => {
@@ -49,11 +51,10 @@ export class MahasiswaComponent implements OnInit {
       error: (err) => {
         console.error('Error fetching mahasiswa data:', err);
         this.isLoading = false;
-      }
+      },
     });
   }
 
-  // Mengambil data program studi untuk dropdown
   getProdi(): void {
     this.http.get<any[]>(this.apiProdiUrl).subscribe({
       next: (data) => {
@@ -61,13 +62,12 @@ export class MahasiswaComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching prodi data:', err);
-      }
+      },
     });
   }
 
-  // Menambahkan mahasiswa
   addMahasiswa(): void {
-    if (this.mahasiswaForm.valid) {
+    if (this.mahasiswaForm.valid) { 
       this.isSubmitting = true;
       this.http.post(this.apiMahasiswaUrl, this.mahasiswaForm.value).subscribe({
         next: (response) => {
@@ -75,23 +75,32 @@ export class MahasiswaComponent implements OnInit {
           this.getMahasiswa();
           this.mahasiswaForm.reset();
           this.isSubmitting = false;
-
-          // Tutup modal setelah data berhasil ditambahkan
           const modalElement = document.getElementById('tambahMahasiswaModal') as HTMLElement;
           if (modalElement) {
             const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
             modalInstance.hide();
+
+            modalElement.addEventListener('hidden.bs.modal', () => { // Tambahkan event listener untuk modal yang ditutup.
+              const backdrop = document.querySelector('.modal-backdrop'); // Cari elemen backdrop modal.
+              if (backdrop) { 
+                backdrop.remove(); // Hapus backdrop jika ada.
+              }
+
+              // Pulihkan scroll pada body
+              document.body.classList.remove('modal-open'); // Hapus class 'modal-open' dari body.
+              document.body.style.overflow = ''; // Pulihkan properti overflow pada body.
+              document.body.style.paddingRight = ''; // Pulihkan padding body.
+            }, { once: true }); // Event listener hanya dijalankan sekali.
           }
         },
         error: (err) => {
           console.error('Error menambahkan mahasiswa:', err);
           this.isSubmitting = false;
-        }
+        },
       });
     }
   }
 
-  // Menghapus mahasiswa
   deleteMahasiswa(_id: string): void {
     if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
       this.http.delete(`${this.apiMahasiswaUrl}/${_id}`).subscribe({
@@ -102,6 +111,52 @@ export class MahasiswaComponent implements OnInit {
         error: (err) => {
           console.error('Error menghapus mahasiswa:', err);
         }
+      });
+    }
+  }
+
+  getMahasiswaById(_id: string): void {
+    this.editMahasiswaId = _id;
+    this.http.get(`${this.apiMahasiswaUrl}/${_id}`).subscribe({
+      next: (data: any) => {
+        this.mahasiswaForm.patchValue({
+          npm: data.npm,
+          nama: data.nama,
+          jenis_kelamin: data.jenis_kelamin,
+          asal_sekolah: data.asal_sekolah,
+          prodi_id: data.prodi_id,
+        });
+        const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
+        if (modalElement) {
+          const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+          modalInstance.show();
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching mahasiswa data by ID:', err);
+      },
+    });
+  }
+
+  updateMahasiswa(): void {
+    if (this.mahasiswaForm.valid) {
+      this.isSubmitting = true;
+      this.http.put(`${this.apiMahasiswaUrl}/${this.editMahasiswaId}`, this.mahasiswaForm.value).subscribe({
+        next: (response) => {
+          console.log('Mahasiswa berhasil diperbarui:', response);
+          this.getMahasiswa();
+          this.isSubmitting = false;
+
+          const modalElement = document.getElementById('editMahasiswaModal') as HTMLElement;
+          if (modalElement) {
+            const modalInstance = bootstrap.Modal.getInstance(modalElement);
+            modalInstance?.hide();
+          }
+        },
+        error: (err) => {
+          console.error('Error updating mahasiswa:', err);
+          this.isSubmitting = false;
+        },
       });
     }
   }
