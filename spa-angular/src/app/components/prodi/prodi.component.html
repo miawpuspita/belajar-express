@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <!-- Button to open the modal -->
+  <!-- Tombol untuk membuka modal -->
   <button
     type="button"
     class="btn btn-primary mb-3"
@@ -29,7 +29,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="tambahProdiModalLabel">Tambah Program Studi</h5>
+          <h5 class="modal-title" id="tambahProdiModalLabel">
+            Tambah Program Studi
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -64,7 +66,10 @@
                 class="form-select"
                 formControlName="fakultas_id"
               >
-                <option *ngFor="let fakultas of fakultas" [value]="fakultas._id">
+                <option
+                  *ngFor="let fakultas of fakultas"
+                  [value]="fakultas._id"
+                >
                   {{ fakultas.nama }}
                 </option>
               </select>
@@ -81,7 +86,6 @@
       </div>
     </div>
   </div>
-
   <!-- Modal Edit Prodi -->
   <div
     class="modal fade"
@@ -93,7 +97,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="editProdiModalLabel">Ubah Program Studi</h5>
+          <h5 class="modal-title" id="editProdiModalLabel">
+            Ubah Program Studi
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -128,7 +134,10 @@
                 class="form-select"
                 formControlName="fakultas_id"
               >
-                <option *ngFor="let fakultas of fakultas" [value]="fakultas._id">
+                <option
+                  *ngFor="let fakultas of fakultas"
+                  [value]="fakultas._id"
+                >
                   {{ fakultas.nama }}
                 </option>
               </select>
@@ -145,8 +154,7 @@
       </div>
     </div>
   </div>
-
-  <!-- Data Prodi in Card format -->
+  <!-- Data Prodi dalam bentuk Card -->
   <div class="row row-cols-1 row-cols-md-3 g-4 mt-4" *ngIf="!isLoading">
     <div class="col" *ngFor="let item of prodi">
       <div class="card shadow-sm h-100">
@@ -165,7 +173,6 @@
           >
             Edit
           </button>
-
           <button
             type="button"
             class="btn btn-danger mt-3"
